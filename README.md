@@ -1,13 +1,13 @@
-# redSoft cloud platform
+# sass app high-speed development platform
 
 #### 一. 项目说明
     
-    基于Spring Cloud Greenwich.SR1 的快速开发平台
+    基于Spring Cloud Hoxton.RELEASE 的快速开发平台
     
 
 |类别                | 框架          
 --------------     |----------- 
-| 核心框架             |  springcloud Greenwich |
+| 核心框架             |  springcloud Hoxton.RELEASE |
 | 安全框架             |   Spring Security、 Spring Cloud Oauth2     |
 | 持久层框架           | MyBatis-Plus        |
 | 数据库连接池         | Alibaba Druid       |
