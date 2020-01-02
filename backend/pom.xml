@@ -60,12 +60,6 @@
 				<scope>import</scope>
 			</dependency>
 
-			<!--lombok依赖-->
-			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<optional>true</optional>
-			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
