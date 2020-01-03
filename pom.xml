@@ -7,7 +7,7 @@
 	<groupId>cn.ff.dionysus</groupId>
 	<artifactId>dionysus-parent</artifactId>
 	<version>1.0-SNAPSHOT</version>
-
+	<name>dionysus</name>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -20,6 +20,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring.cloud.version>Hoxton.RELEASE</spring.cloud.version>
+		<spring.boot.version>2.2.2.RELEASE</spring.boot.version>
+		<alibaba.cloud.version>2.1.1.RELEASE</alibaba.cloud.version>
 	</properties>
 
 
@@ -59,20 +61,87 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${alibaba.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<!--<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+				<version>${alibaba.cloud.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+				<version>${alibaba.cloud.version}</version>
+			</dependency>-->
 
 			<dependency>
-				<groupId>commons-lang</groupId>
-				<artifactId>commons-lang</artifactId>
-				<version>${commons-lang-version}</version>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.9</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>${fastjson-version}</version>
+				<version>1.2.62</version>
 			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
 
 
+
+	<build>
+		<finalName>${project.name}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.version}</version>
+					<configuration>
+						<finalName>${project.build.finalName}</finalName>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+
+		</plugins>
+	</build>
+
+
+
+	<repositories>
+		<!--阿里云主仓库，代理了maven central和jcenter仓库-->
+		<repository>
+			<id>aliyun</id>
+			<name>aliyun</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
