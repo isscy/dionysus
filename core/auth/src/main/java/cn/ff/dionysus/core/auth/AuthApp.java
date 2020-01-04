@@ -7,7 +7,9 @@ package cn.ff.dionysus.core.auth;
  */
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 认证中心 授权管理
@@ -15,6 +17,8 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @author fengfan 2019-06-03
  */
 @SpringCloudApplication
+/*@SpringBootApplication
+@EnableDiscoveryClient*/
 //@MapperScan("cn.redsoft.cloudplatform.auth.mapper")
 public class AuthApp {
 

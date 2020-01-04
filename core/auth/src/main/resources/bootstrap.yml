@@ -1,0 +1,28 @@
+server:
+    port: 9001
+
+spring:
+    application:
+        name: auth
+        profiles:
+            active: dev
+    cloud:
+        nacos:
+            discovery:
+                server-addr: 192.168.1.99:8848
+            config:
+                server-addr: 127.0.0.1:8848
+                file-extension: yaml
+    datasource:
+        url: jdbc:mysql://47.93.246.239:3306/magician?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+        username: root
+        password: redSoft!123
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+            test-on-borrow: true
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
