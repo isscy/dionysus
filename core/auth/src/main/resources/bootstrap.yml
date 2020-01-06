@@ -4,15 +4,17 @@ server:
 spring:
     application:
         name: auth
-        profiles:
-            active: dev
+    profiles:
+        active: '@profile.name@'  # dev
     cloud:
         nacos:
             discovery:
-                server-addr: 192.168.1.99:8848
+                server-addr: '@config.server-addr@'
             config:
-                server-addr: 127.0.0.1:8848
+                server-addr: '@discovery.server-addr@'
                 file-extension: yaml
+                #group: '@config.group@'
+                
     datasource:
         url: jdbc:mysql://47.93.246.239:3306/magician?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
         username: root

@@ -95,6 +95,32 @@
 
 
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault><!--默认激活配置-->
+			</activation>
+			<properties>
+				<profile.name>dev</profile.name><!--当前环境-->
+				<config.server-addr>127.0.0.1:8848</config.server-addr><!--配置中心地址-->
+				<discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+				<config.group>DEV</config.group> <!--配置中心多环境支持的namespace,使用ID默认为空-->
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profile.name>test</profile.name>
+				<config.server-addr>192.168.48.200:8848</config.server-addr>
+				<discovery.server-addr>192.168.48.200:8848</discovery.server-addr>
+				<config.namespace/>
+			</properties>
+		</profile>
+
+	</profiles>
+
+
 
 	<build>
 		<finalName>${project.name}</finalName>
@@ -121,6 +147,13 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!--<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<encoding>utf-8</encoding>
+						<useDefaultDelimiters>true</useDefaultDelimiters>
+					</configuration>
+				</plugin>-->
 			</plugins>
 		</pluginManagement>
 		<plugins>
