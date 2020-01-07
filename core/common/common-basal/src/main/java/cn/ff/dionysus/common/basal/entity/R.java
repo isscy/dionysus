@@ -1,8 +1,6 @@
 package cn.ff.dionysus.common.basal.entity;
 
 import cn.ff.dionysus.common.basal.constant.ResultEnum;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -73,9 +71,9 @@ public class R<T> implements Serializable {
     }
 
 
-    public String asJson() {
+    /*public String asJson() {
         return new Gson().toJson(this);
-    }
+    }*/
 
 
     public boolean hadSuccess() {

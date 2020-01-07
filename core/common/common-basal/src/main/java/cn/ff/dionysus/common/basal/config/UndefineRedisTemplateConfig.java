@@ -13,13 +13,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis 配置类 - 未测试
- *
+ * 已作废 at 2020-1-7
  * @author fengfan 2019/12/31
  */
-@EnableCaching
+/*@EnableCaching
 @Configuration
+@AutoConfigureBefore(RedisAutoConfiguration.class)*/
 @AllArgsConstructor
-@AutoConfigureBefore(RedisAutoConfiguration.class)
+@Deprecated
 public class UndefineRedisTemplateConfig {
 
     private final RedisConnectionFactory factory;
