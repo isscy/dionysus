@@ -1,0 +1,6 @@
+# Nacos的配置文件copy
+# dataId = auth.yaml
+# group = DEV
+
+current:
+    to: fsadfkopqamvx,cvs;osgtrdxc

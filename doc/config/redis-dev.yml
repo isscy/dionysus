@@ -1,0 +1,10 @@
+# Nacos的配置文件copy
+# dataId = redis.yml
+# group = DEV
+
+spring:
+    redis:
+        database: 5
+        host: 127.0.0.1
+        port: 6379
+        password: 123456

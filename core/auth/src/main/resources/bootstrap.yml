@@ -10,18 +10,21 @@ spring:
         nacos:
             discovery:
                 server-addr: '@config.server-addr@'
-            config:
+            config: # 当前会加载 @config.group@ group中的 auth.yaml  mysql.yml
                 server-addr: '@discovery.server-addr@'
                 file-extension: yaml
-                #group: '@config.group@'
-                
-    datasource:
-        url: jdbc:mysql://47.93.246.239:3306/magician?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
-        username: root
-        password: redSoft!123
-        type: com.alibaba.druid.pool.DruidDataSource
-        druid:
-            test-on-borrow: true
+                group: '@config.group@'
+                ext-config:
+                    -
+                        dataId: mysql.yml
+                        group: '@config.group@'
+                        refresh: false
+                    -
+                        dataId: redis.yml
+                        group: '@config.group@'
+                        refresh: false
+
+
 
 management:
     endpoints:
