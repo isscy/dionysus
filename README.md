@@ -12,7 +12,9 @@
 | 持久层框架           | MyBatis-Plus        |
 | 数据库连接池         | Alibaba Druid       |
 | 消息队列             | RabbitMQ     |
+| 缓存中间件             | Redis (Redisson)     |
 | 分布式任务调度        | elastic-job       |
+| 分布式事务        | Seata       |
     
 
 ---

@@ -1,0 +1,13 @@
+# Nacos的配置文件copy
+# dataId = muffle.yml
+# group = DEV
+
+muffle:
+    # 权限相关
+    security:
+    
+    # 路由限制
+    way:
+        ignore:
+            clients: # 放行终端配置，网关不校验此处的终端
+                - Auth

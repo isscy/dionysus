@@ -1,9 +1,9 @@
 server:
-    port: 9001
+    port: 9999
 
 spring:
     application:
-        name: auth
+        name: @name@
     profiles:
         active: '@profile.name@'  # dev
     cloud:
@@ -15,19 +15,9 @@ spring:
                 file-extension: yaml
                 group: '@config.group@'
                 ext-config:
-                    -
-                        dataId: mysql.yml
+                    -   dataId: mysql.yml
                         group: '@config.group@'
                         refresh: false
-                    -
-                        dataId: redis.yml
+                    -   dataId: redis.yml
                         group: '@config.group@'
                         refresh: false
-
-
-
-management:
-    endpoints:
-        web:
-            exposure:
-                include: "*"
