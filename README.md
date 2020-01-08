@@ -2,7 +2,7 @@
 
 #### 一. 项目说明
     
-    基于Spring Cloud Hoxton.RELEASE 的快速开发平台
+    基于Spring Cloud Hoxton.RELEASE 的快速开发平台, 集成了Nacos作为注册和配置中心、oauth2鉴权、Seata分布式事务、rbac权限以及数据权限、通知权限(阿里短信、极光APP推送、邮件通知)、Excel导入导出封装等
     
 
 |类别                | 框架          
