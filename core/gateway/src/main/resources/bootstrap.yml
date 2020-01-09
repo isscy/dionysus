@@ -15,9 +15,11 @@ spring:
                 file-extension: yaml
                 group: '@config.group@'
                 ext-config:
-                    -   dataId: mysql.yml
+                    -
+                        dataId: mysql.yml
                         group: '@config.group@'
                         refresh: false
-                    -   dataId: redis.yml
+                    -
+                        dataId: redis.yml
                         group: '@config.group@'
                         refresh: false
