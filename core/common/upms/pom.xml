@@ -3,19 +3,18 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<artifactId>core</artifactId>
+		<artifactId>common</artifactId>
 		<groupId>cn.ff.dionysus</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>auth</artifactId>
-	<name>auth</name>
-	<description>认证授权中心</description>
-	<packaging>jar</packaging>
-
+	<name>upms</name>
+	<description>通用用户权限管理系统</description>
+	<artifactId>upms</artifactId>
 
 
 	<dependencies>
+
 		<!--spring cloud 相关-->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
@@ -37,17 +36,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+		</dependency>
 		<!--JDBC相关-->
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -57,24 +63,12 @@
 			<artifactId>druid</artifactId>
 			<version>1.1.21</version>
 		</dependency>
-		<!--spring security 、oauth、jwt依赖-->
+		<!-- CORE -->
 		<dependency>
 			<groupId>cn.ff.dionysus</groupId>
-			<artifactId>common-security</artifactId>
+			<artifactId>common-basal</artifactId>
 			<version>${parent.version}</version>
 		</dependency>
-
-
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 
 </project>

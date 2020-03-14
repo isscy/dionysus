@@ -12,6 +12,8 @@ public interface ServiceNameConstant {
 
     String SERVICE_GATEWAY = "gateway";
 
+    String SERVICE_UPMS = "upms";
+
 
     // TODO 1 : 数据权限  https://gitee.com/log4j/pig/blob/master/pig-common/pig-common-core/src/main/java/com/pig4cloud/pig/common/core/mybatis/DataScopeInterceptor.java
 

@@ -21,14 +21,17 @@
 
 ---
 #### 二. 技术栈及项目结构说明
-```lua
+```
 cloudPlatform
 ├── core -- 基础核心模块集合
-     └── auth -- 认证服务
+     ├── auth -- 认证服务
      ├── common -- 基础公共模块
-     ├── eureke -- 注册中心
+          ├── basal -- 最基础模块，包含通用工具类、Redis、用户权限Entity和feign接口
+          ├── upms -- UserPermissionsManagement 用户租户角色的curd [9009]
+          └── security -- 权限和oauth2权限配置
+     ├── eureke -- 注册中心 [已删除换用nacos]
      ├── gateway -- 网关 [8888]
-     └── config -- 配置中心
+     └── config -- 配置中心 [已删除换用nacos]
 ├── admin -- 后台管理模块
 ├── order -- 订单服务 TODO
 ├── stock -- 库存服务 TODO
