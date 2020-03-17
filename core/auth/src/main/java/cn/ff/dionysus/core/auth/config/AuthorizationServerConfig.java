@@ -1,15 +1,24 @@
 package cn.ff.dionysus.core.auth.config;
 
 import cn.ff.dionysus.common.basal.constant.SecurityConstant;
+import cn.ff.dionysus.common.basal.entity.BaseUserDetail;
+import cn.ff.dionysus.common.basal.entity.SysUser;
 import cn.ff.dionysus.common.basal.service.ClientDetailsRemoteImpl;
 import cn.ff.dionysus.common.security.component.DefaultWebResponseExceptionTranslator;
+import cn.ff.dionysus.common.security.component.SysTokenServices;
 import cn.ff.dionysus.core.auth.service.DefaultClientDetailsService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,10 +26,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,15 +42,15 @@ import java.util.Map;
  * @author fengfan 2020/2/19
  */
 @Configuration
-@AllArgsConstructor
 @EnableAuthorizationServer
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final RedisConnectionFactory redisConnectionFactory;
-
+    private AuthorizationServerEndpointsConfigurer endpoints;
 
 
     @Bean
@@ -62,29 +74,31 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
+                .authenticationManager(authenticationManager)
                 .tokenStore(tokenStore())
                 .tokenEnhancer(tokenEnhancer())
                 .userDetailsService(userDetailsService)
-                .authenticationManager(authenticationManager)
-                .reuseRefreshTokens(false)
+                .reuseRefreshTokens(false)// refresh_token需要userDetailsService
                 //.pathMapping("/oauth/confirm_access", "/token/confirm_access") //用来配置端点URL链接
                 .exceptionTranslator(new DefaultWebResponseExceptionTranslator()); // 认证异常翻译
+        this.endpoints = endpoints;
+        endpoints.tokenServices(sysTokenServices());
     }
-
 
 
     @Bean
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
-            final Map<String, Object> additionalInfo = new HashMap<>(4);
-           /* BaseUserDetail userDetail = (BaseUserDetail) authentication.getUserAuthentication().getPrincipal();
-            additionalInfo.put(SecurityConstants.DETAILS_USER_ID, userDetail.getSysUser());
-            additionalInfo.put(SecurityConstants.DETAILS_USERNAME, pigUser.getUsername());
-            additionalInfo.put(SecurityConstants.DETAILS_DEPT_ID, pigUser.getDeptId());*/
+            Map<String, Object> additionalInfo = new HashMap<>(8);
+            SysUser sysUser = ((BaseUserDetail) authentication.getPrincipal()).getSysUser();
+            additionalInfo.put("userId", sysUser.getId());
+            additionalInfo.put("nickName", sysUser.getNickName());
+            additionalInfo.put("userName", sysUser.getUserName());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
             return accessToken;
         };
     }
+
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -92,6 +106,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .allowFormAuthenticationForClients()
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
+    }
+
+    @Bean
+    @Primary
+    @Lazy
+    public AuthorizationServerTokenServices sysTokenServices() {
+        SysTokenServices tokenServices = new SysTokenServices();
+        tokenServices.setTokenStore(tokenStore());
+        tokenServices.setSupportRefreshToken(true);//支持刷新token
+        tokenServices.setReuseRefreshToken(true);
+        tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
+        tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
+        addUserDetailsService(tokenServices);
+        return tokenServices;
+    }
+
+    private void addUserDetailsService(SysTokenServices tokenServices) {
+        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+        tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
     }
 }
 
