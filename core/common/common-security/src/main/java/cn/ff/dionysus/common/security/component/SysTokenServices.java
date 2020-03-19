@@ -1,20 +1,29 @@
 package cn.ff.dionysus.common.security.component;
 
 import cn.ff.dionysus.common.basal.utils.WebUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.common.*;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -25,6 +34,8 @@ import java.util.UUID;
  *
  * @author fengfan at 2019-07-23
  */
+@Service(value = "sysTokenServices")
+//@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SysTokenServices implements AuthorizationServerTokenServices, ResourceServerTokenServices, ConsumerTokenServices, InitializingBean {
 
 
@@ -43,6 +54,21 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
     private TokenEnhancer accessTokenEnhancer;
 
     private AuthenticationManager authenticationManager;
+
+    private UserDetailsService userDetailsService;
+
+
+    @Autowired
+    public SysTokenServices(TokenStore tokenStore, ClientDetailsService clientDetailsService, TokenEnhancer tokenEnhancer, AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+        this.tokenStore = tokenStore;
+        this.clientDetailsService = clientDetailsService;
+        this.accessTokenEnhancer = tokenEnhancer;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        /*PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+        this.authenticationManager = new ProviderManager(Collections.singletonList(provider));*/
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -293,9 +319,9 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
      *
      * @param accessTokenEnhancer the access token enhancer to set
      */
-    public void setTokenEnhancer(TokenEnhancer accessTokenEnhancer) {
+    /*public void setTokenEnhancer(TokenEnhancer accessTokenEnhancer) {
         this.accessTokenEnhancer = accessTokenEnhancer;
-    }
+    }*/
 
     /**
      * The validity (in seconds) of the refresh token. If less than or equal to zero then the tokens will be
@@ -341,9 +367,9 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
      *
      * @param tokenStore the store for access and refresh tokens.
      */
-    public void setTokenStore(TokenStore tokenStore) {
+    /*public void setTokenStore(TokenStore tokenStore) {
         this.tokenStore = tokenStore;
-    }
+    }*/
 
     /**
      * An authentication manager that will be used (if provided) to check the user authentication when a token is
@@ -351,9 +377,9 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
      *
      * @param authenticationManager the authenticationManager to set
      */
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+    /*public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
-    }
+    }*/
 
     /**
      * The client details service to use for looking up clients (if necessary). Optional if the access token expiry is
@@ -361,8 +387,8 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
      *
      * @param clientDetailsService the client details service
      */
-    public void setClientDetailsService(ClientDetailsService clientDetailsService) {
+    /*public void setClientDetailsService(ClientDetailsService clientDetailsService) {
         this.clientDetailsService = clientDetailsService;
-    }
+    }*/
 
 }

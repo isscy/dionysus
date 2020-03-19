@@ -3,11 +3,9 @@ package cn.ff.dionysus.core.auth.config;
 import cn.ff.dionysus.common.basal.constant.SecurityConstant;
 import cn.ff.dionysus.common.basal.entity.BaseUserDetail;
 import cn.ff.dionysus.common.basal.entity.SysUser;
-import cn.ff.dionysus.common.basal.service.ClientDetailsRemoteImpl;
 import cn.ff.dionysus.common.security.component.DefaultWebResponseExceptionTranslator;
 import cn.ff.dionysus.common.security.component.SysTokenServices;
 import cn.ff.dionysus.core.auth.service.DefaultClientDetailsService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +47,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
-    private final RedisConnectionFactory redisConnectionFactory;
+    private final SysTokenServices sysTokenServices;
     private AuthorizationServerEndpointsConfigurer endpoints;
+    private final TokenStore tokenStore;
+    private TokenEnhancer tokenEnhancer;
 
 
-    @Bean
-    public TokenStore tokenStore() {
-        RedisTokenStore tokenStore = new RedisTokenStore(redisConnectionFactory);
-        tokenStore.setPrefix(SecurityConstant.PROJECT_OAUTH_ACCESS);
-        return tokenStore;
-    }
+
 
     @Override
     @SneakyThrows
@@ -75,29 +70,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .authenticationManager(authenticationManager)
-                .tokenStore(tokenStore())
-                .tokenEnhancer(tokenEnhancer())
+                .tokenStore(tokenStore)
+                .tokenEnhancer(tokenEnhancer)
                 .userDetailsService(userDetailsService)
                 .reuseRefreshTokens(false)// refresh_token需要userDetailsService
                 //.pathMapping("/oauth/confirm_access", "/token/confirm_access") //用来配置端点URL链接
                 .exceptionTranslator(new DefaultWebResponseExceptionTranslator()); // 认证异常翻译
         this.endpoints = endpoints;
-        endpoints.tokenServices(sysTokenServices());
+        //addUserDetailsService(sysTokenServices);
+        endpoints.tokenServices(sysTokenServices);
     }
 
 
-    @Bean
-    public TokenEnhancer tokenEnhancer() {
-        return (accessToken, authentication) -> {
-            Map<String, Object> additionalInfo = new HashMap<>(8);
-            SysUser sysUser = ((BaseUserDetail) authentication.getPrincipal()).getSysUser();
-            additionalInfo.put("userId", sysUser.getId());
-            additionalInfo.put("nickName", sysUser.getNickName());
-            additionalInfo.put("userName", sysUser.getUserName());
-            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
-            return accessToken;
-        };
-    }
+
 
 
     @Override
@@ -108,7 +93,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .checkTokenAccess("isAuthenticated()");
     }
 
-    @Bean
+    /*@Bean
     @Primary
     @Lazy
     public AuthorizationServerTokenServices sysTokenServices() {
@@ -118,15 +103,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenServices.setReuseRefreshToken(true);
         tokenServices.setClientDetailsService(endpoints.getClientDetailsService());
         tokenServices.setTokenEnhancer(endpoints.getTokenEnhancer());
-        addUserDetailsService(tokenServices);
+        //addUserDetailsService(tokenServices);
         return tokenServices;
-    }
+    }*/
 
-    private void addUserDetailsService(SysTokenServices tokenServices) {
+    /*private void addUserDetailsService(SysTokenServices tokenServices) {
         PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
         tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
-    }
+    }*/
 }
 
 

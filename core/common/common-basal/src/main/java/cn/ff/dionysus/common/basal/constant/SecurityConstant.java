@@ -22,4 +22,18 @@ public class SecurityConstant {
      * 登陆方式
      */
     public final static String LOGIN_TYPE_PHONE = "phone";
+
+    /**
+     * 超级管理员的ID
+     */
+    public final static int SUPER_ADMIN_ID = 1;
+
+
+    /**
+     * grant_type_list
+     */
+    public final static String REQUEST_GRANT_TYPE_QR = "qr";  // APP 二维码
+    public final static String REQUEST_GRANT_TYPE_USER = "user"; // username/password
+    public final static String REQUEST_GRANT_TYPE_PHONE = "phone"; // phone/code
+    public final static String REQUEST_GRANT_TYPE_WXM = "wx-mini"; // weChat mini code
 }

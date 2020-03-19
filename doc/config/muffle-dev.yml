@@ -5,6 +5,15 @@
 muffle:
     # 权限相关
     security:
+        token:
+            secret: Jdk_18.com
+            expired: 3600
+            refresh-expired: 7200000
+        un-check-url:
+            - /test/**
+            - /error
+    
+    
     
     # 路由限制
     way:

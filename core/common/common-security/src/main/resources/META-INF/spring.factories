@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    cn.ff.dionysus.common.security.utils.Oauth2Property,\
+    cn.ff.dionysus.common.security.component.SysTokenServices

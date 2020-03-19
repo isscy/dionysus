@@ -72,4 +72,8 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * 通过角色的ID获取下面的用户
      */
     List<SysUser> getListByRole(Integer roleId);
+
+
+
+
 }
