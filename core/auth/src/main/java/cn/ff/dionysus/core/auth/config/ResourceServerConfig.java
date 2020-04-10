@@ -67,8 +67,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         // 定义异常转换类生效
-        AuthenticationEntryPoint authenticationEntryPoint = new OAuth2AuthenticationEntryPoint();
-        ((OAuth2AuthenticationEntryPoint) authenticationEntryPoint).setExceptionTranslator(new DefaultWebResponseExceptionTranslator());
+        /*AuthenticationEntryPoint authenticationEntryPoint = new OAuth2AuthenticationEntryPoint();
+        ((OAuth2AuthenticationEntryPoint) authenticationEntryPoint).setExceptionTranslator(new DefaultWebResponseExceptionTranslator());*/
+        OAuth2AuthenticationEntryPoint authenticationEntryPoint = new OAuth2AuthenticationEntryPoint();
+        authenticationEntryPoint.setExceptionTranslator(new DefaultWebResponseExceptionTranslator());
         resources.authenticationEntryPoint(authenticationEntryPoint);
     }
 

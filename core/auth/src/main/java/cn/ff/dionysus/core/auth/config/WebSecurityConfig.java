@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 /**
  * 权限配置
+ *
  * @author fengfan 2020/2/19
  */
 @Primary
@@ -31,6 +33,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserAuthenticationProvider userAuthenticationProvider;
+    private final DaoAuthenticationProvider daoAuthenticationProvider;
 
 
     @Override
@@ -61,9 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(userAuthenticationProvider)/*.authenticationProvider(phoneAuthenticationProvider)*/;
+        auth.authenticationProvider(userAuthenticationProvider)
+                .authenticationProvider(daoAuthenticationProvider);
+        /*.authenticationProvider(phoneAuthenticationProvider)*/
     }
-
 
 
     @Bean
@@ -77,8 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new FormAuthenticationFailureHandler();
     }*/
-
-
 
 
 }

@@ -1,0 +1,2 @@
+org.springframework.boot.SpringApplicationRunListener=\
+    cn.ff.dionysus.core.register.listener.StartingSpringApplicationRunListener

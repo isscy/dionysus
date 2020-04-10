@@ -193,11 +193,17 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
         return false;
     }
 
+    /**
+     * 根据字符串accessToken获得OAuth2AccessToken
+     */
     @Override
     public OAuth2AccessToken readAccessToken(String accessToken) {
         return tokenStore.readAccessToken(accessToken);
     }
 
+    /**
+     * 根据字符串accessToken获得OAuth2Authentication
+     */
     @Override
     public OAuth2Authentication loadAuthentication(String accessTokenValue) throws AuthenticationException, InvalidTokenException {
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(accessTokenValue);

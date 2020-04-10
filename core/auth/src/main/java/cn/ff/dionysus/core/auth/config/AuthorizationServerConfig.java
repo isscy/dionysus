@@ -50,7 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final SysTokenServices sysTokenServices;
     private AuthorizationServerEndpointsConfigurer endpoints;
     private final TokenStore tokenStore;
-    private TokenEnhancer tokenEnhancer;
+    private final TokenEnhancer tokenEnhancer;
 
 
 
@@ -92,6 +92,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()");
     }
+    
+    
+    
 
     /*@Bean
     @Primary

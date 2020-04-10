@@ -11,7 +11,7 @@ import cn.ff.dionysus.common.basal.entity.R;
 public class Rs {
 
     public static R ok() {
-        return new R().ok();
+        return new R<>().ok();
     }
 
     public static <T> R<T> ok(T data) {

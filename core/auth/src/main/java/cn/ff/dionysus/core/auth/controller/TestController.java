@@ -1,7 +1,6 @@
 package cn.ff.dionysus.core.auth.controller;
 
 import cn.ff.dionysus.common.basal.entity.R;
-import cn.ff.dionysus.core.auth.config.properties.TestProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,8 +19,6 @@ public class TestController {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private TestProperty testProperty;
 
     @Value("${current.to}")
     private String todo;
@@ -33,8 +30,7 @@ public class TestController {
     }
     @GetMapping("config2")
     public R testConfig2() {
-
-        return R.ok(testProperty.toString());
+        return R.ok();
     }
 
 }
