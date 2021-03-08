@@ -26,12 +26,13 @@
 
 
 	<modules>
-		<module>core</module>
+		<module>common</module>
 	</modules>
 
 
-
 	<dependencies>
+		<!-- spring 相关 BEGIN -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -48,6 +49,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- spring 相关 END -->
 	</dependencies>
 
 

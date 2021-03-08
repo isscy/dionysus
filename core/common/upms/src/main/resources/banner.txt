@@ -1,9 +1,0 @@
-.-. .-.,---.             .---.
-| | | || .-.\ |\    /|  ( .-._)
-| | | || |-' )|(\  / | (_) \
-| | | || |--' (_)\/  | _  \ \
-| `-')|| |    | \  / |( `-'  )
-`---(_)/(     | |\/| | `----'
-      (__)    '-'  '-'
-
-${AnsiColor.BLACK} dionysus  :: ${AnsiColor.BLUE}  ${spring.application.name}  :: ${AnsiColor.RED}  ${spring.profiles.active}

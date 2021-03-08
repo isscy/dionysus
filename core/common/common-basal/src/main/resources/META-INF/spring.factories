@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    cn.ff.dionysus.common.basal.utils.SpringContextHolder,\
-    cn.ff.dionysus.common.basal.config.RedisConfig
-
