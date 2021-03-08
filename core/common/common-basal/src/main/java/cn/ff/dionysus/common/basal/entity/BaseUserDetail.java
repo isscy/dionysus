@@ -18,6 +18,7 @@ public class BaseUserDetail implements UserDetails, CredentialsContainer, Serial
     private final SysUser sysUser;
     private final User user;
 
+
     public BaseUserDetail(SysUser sysUser, User user) {
         this.sysUser = sysUser;
         this.user = user;

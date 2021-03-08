@@ -31,7 +31,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 @Configuration
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+//
     private final UserAuthenticationProvider userAuthenticationProvider;
     private final DaoAuthenticationProvider daoAuthenticationProvider;
 

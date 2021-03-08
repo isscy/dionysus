@@ -44,10 +44,10 @@ public class BaseUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username, ClientType clientType) throws UsernameNotFoundException {
         if (username == null || StringUtils.isBlank(username.trim()))
             throw new UsernameNotFoundException(username + " 不能为空");
-        Cache cache = cacheManager.getCache(CacheConstant.USER_DETAILS);
+        /*Cache cache = cacheManager.getCache(CacheConstant.USER_DETAILS);
         if (cache != null && cache.get(username) != null) {
             return (BaseUserDetail) cache.get(username).get();
-        }
+        }*/
         SysUser sysUser = sysUserMapper.getByUserName(username, true);
         if (sysUser == null) {
             LOGGER.debug("找不到该用户 ：{}", username);
@@ -170,10 +170,10 @@ public class BaseUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (username == null || StringUtils.isBlank(username.trim()))
             throw new UsernameNotFoundException(username + " 不能为空");
-        Cache cache = cacheManager.getCache(CacheConstant.USER_DETAILS);
+        /*Cache cache = cacheManager.getCache(CacheConstant.USER_DETAILS);
         if (cache != null && cache.get(username) != null) {
             return (BaseUserDetail) cache.get(username).get();
-        }
+        }*/
         SysUser sysUser = sysUserMapper.getByUserName(username, true);
         if (sysUser == null) {
             LOGGER.debug("找不到该用户 ：{}", username);
@@ -190,7 +190,7 @@ public class BaseUserDetailsService implements UserDetailsService {
         org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(sysUser.getUserName(),
                 sysUser.getPassword(), isActive(sysUser.getStatus()), true, true, true, convertToAuthorities(sysUser, roles));
         BaseUserDetail baseUserDetail = new BaseUserDetail(sysUser, user);
-        cache.put(username, baseUserDetail);
+        //cache.put(username, baseUserDetail);
         return baseUserDetail;
 
     }

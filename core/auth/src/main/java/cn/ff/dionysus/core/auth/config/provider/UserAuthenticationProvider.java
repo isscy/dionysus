@@ -54,8 +54,9 @@ public class UserAuthenticationProvider extends AbstractUserDetailsAuthenticatio
         } catch (UsernameNotFoundException e) {
             throw new UsernameNotFoundException("账号或密码不正确");
         }
-        if (user == null || !user.isEnabled())
+        if (user == null || !user.isEnabled()){
             throw new UsernameNotFoundException("账号已被锁定,请联系管理员");
+        }
         return user;
     }
 

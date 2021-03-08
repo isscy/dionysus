@@ -93,8 +93,9 @@ public class SysTokenServices implements AuthorizationServerTokenServices, Resou
         OAuth2AccessToken accessToken = createAccessToken(authentication, refreshToken);
         tokenStore.storeAccessToken(accessToken, authentication);
         refreshToken = accessToken.getRefreshToken();
-        if (refreshToken != null)
+        if (refreshToken != null){
             tokenStore.storeRefreshToken(refreshToken, authentication);
+        }
         return accessToken;
     }
 
